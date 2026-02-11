@@ -768,6 +768,11 @@ footer {
         padding: 3rem 0;
     }
 
+    .hero {
+        padding-top: calc(var(--nav-height) + 2rem);
+        min-height: auto;
+    }
+
     .menu-toggle {
         display: flex;
         order: 3;
