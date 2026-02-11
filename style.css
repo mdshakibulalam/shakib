@@ -306,7 +306,7 @@ header {
     font-size: 4rem;
     font-weight: 800;
     margin-bottom: 0.5rem;
-    background: linear-gradient(to right, var(--text-primary), #555);
+    background: linear-gradient(to right, var(--text-primary), #bebdbd);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -788,4 +788,5 @@ footer {
     .hero-content {
         padding: 0 1rem;
     }
+
 }
