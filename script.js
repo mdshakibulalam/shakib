@@ -45,27 +45,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Theme Toggle Logic
     const themeToggleBtn = document.getElementById('theme-toggle');
-    const themeIcon = themeToggleBtn.querySelector('i');
+    const themeIcon = themeToggleBtn ? themeToggleBtn.querySelector('i') : null;
     const body = document.body;
 
-    // Check for saved theme preference
-    const currentTheme = localStorage.getItem('theme');
-    if (currentTheme === 'light') {
-        body.classList.add('light-theme');
-        themeIcon.classList.replace('fa-moon', 'fa-sun');
+    function setTheme(theme, save = true) {
+        if (theme === 'light') {
+            body.classList.add('light-theme');
+            if (themeIcon) themeIcon.classList.replace('fa-moon', 'fa-sun');
+            if (save) localStorage.setItem('theme', 'light');
+        } else {
+            body.classList.remove('light-theme');
+            if (themeIcon) themeIcon.classList.replace('fa-sun', 'fa-moon');
+            if (save) localStorage.setItem('theme', 'dark');
+        }
     }
+
+    // Check for saved theme preference or system preference
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+    if (savedTheme) {
+        setTheme(savedTheme, false);
+    } else if (!systemPrefersDark.matches) {
+        // Default to light if system prefers light and no preference saved
+        // Note: CSS :root is dark by default, so we apply light-theme
+        setTheme('light', false);
+    }
+
+    // Listen for system theme changes
+    systemPrefersDark.addEventListener('change', (e) => {
+        if (!localStorage.getItem('theme')) {
+            setTheme(e.matches ? 'dark' : 'light', false);
+        }
+    });
 
     if (themeToggleBtn) {
         themeToggleBtn.addEventListener('click', () => {
-            body.classList.toggle('light-theme');
-
-            if (body.classList.contains('light-theme')) {
-                themeIcon.classList.replace('fa-moon', 'fa-sun');
-                localStorage.setItem('theme', 'light');
-            } else {
-                themeIcon.classList.replace('fa-sun', 'fa-moon');
-                localStorage.setItem('theme', 'dark');
-            }
+            const isLight = body.classList.contains('light-theme');
+            setTheme(isLight ? 'dark' : 'light', true);
         });
     }
 
