@@ -37,12 +37,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const header = document.querySelector('header');
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
-            header.style.backgroundColor = "rgba(10, 10, 10, 0.95)";
-            header.style.boxShadow = "0 2px 10px rgba(0,0,0,0.3)";
+            header.style.boxShadow = "0 2px 10px var(--shadow-color)";
         } else {
-            header.style.backgroundColor = "rgba(10, 10, 10, 0.8)";
             header.style.boxShadow = "none";
         }
     });
+
+    // Theme Toggle Logic
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = themeToggleBtn.querySelector('i');
+    const body = document.body;
+
+    // Check for saved theme preference
+    const currentTheme = localStorage.getItem('theme');
+    if (currentTheme === 'light') {
+        body.classList.add('light-theme');
+        themeIcon.classList.replace('fa-moon', 'fa-sun');
+    }
+
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+            body.classList.toggle('light-theme');
+
+            if (body.classList.contains('light-theme')) {
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+                localStorage.setItem('theme', 'light');
+            } else {
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+    }
 
 });
