@@ -69,4 +69,64 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+
+    // Project Filtering
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const projectCards = document.querySelectorAll('#projects .project-card');
+
+    if (filterBtns.length > 0) {
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterBtns.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                btn.classList.add('active');
+
+                const filterValue = btn.getAttribute('data-filter');
+
+                // 1. Fade out ALL cards first using the 'animating' class defined in CSS
+                projectCards.forEach(card => {
+                    card.classList.add('animating');
+                });
+
+                // 2. Wait for fade out to finish (300ms matches CSS transition)
+                setTimeout(() => {
+                    projectCards.forEach(card => {
+                        const tag = card.querySelector('.project-tag').textContent.toLowerCase();
+                        let shouldShow = false;
+
+                        if (filterValue === 'all') {
+                            shouldShow = true;
+                        } else if (filterValue === 'hardware') {
+                            if (tag.includes('hardware')) {
+                                shouldShow = true;
+                            }
+                        } else {
+                            if (tag.includes(filterValue)) {
+                                shouldShow = true;
+                            }
+                        }
+
+                        if (shouldShow) {
+                            card.classList.remove('hide');
+                        } else {
+                            card.classList.add('hide');
+                        }
+                    });
+
+                    // 3. Fade in visible cards with a stagger effect
+                    const visibleCards = Array.from(projectCards).filter(c => !c.classList.contains('hide'));
+
+                    visibleCards.forEach((card, index) => {
+                        // Stagger delay: 50ms initial + 50ms per item
+                        setTimeout(() => {
+                            card.classList.remove('animating');
+                        }, 50 + (index * 50));
+                    });
+
+                }, 300);
+            });
+        });
+    }
+
 });
