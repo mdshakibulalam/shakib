@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -18,13 +18,14 @@
     <!-- Header -->
     <header>
         <div class="navbar">
-            <div class="logo">Md<span class="highlight">. Shakibul Alam</span></div>
-            <div class="menu-toggle" id="mobile-menu">
+            <a class="logo" href="#home" aria-label="Md Shakibul Alam home">Md<span class="highlight">. Shakibul Alam</span></a>
+            <button class="menu-toggle" id="mobile-menu" type="button" aria-controls="primary-navigation" aria-expanded="false" aria-label="Open navigation menu">
                 <span class="bar"></span>
                 <span class="bar"></span>
                 <span class="bar"></span>
-            </div>
-            <ul class="nav-list">
+            </button>
+            <nav aria-label="Primary navigation">
+            <ul class="nav-list" id="primary-navigation">
                 <li><a href="#home" class="nav-link">Home</a></li>
                 <li><a href="#experience" class="nav-link">Experience</a></li>
                 <li><a href="#skills" class="nav-link">Skills</a></li>
@@ -35,18 +36,21 @@
                 <li><a href="#extracurricular" class="nav-link">Extracurricular</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
-            <button class="theme-toggle-btn" id="theme-toggle">
+            </nav>
+            <button class="theme-toggle-btn" id="theme-toggle" type="button" aria-label="Switch to light theme">
                 <i class="fas fa-moon"></i>
             </button>
         </div>
     </header>
 
+    <main>
     <!-- Hero Section -->
     <section id="home" class="hero section">
         <div class="blob"></div>
         <div class="container">
             <div class="hero-grid">
                 <div class="hero-content">
+                    <p class="security-kicker"><i class="fas fa-shield-halved" aria-hidden="true"></i> Cybersecurity Portfolio</p>
                     <p class="greeting">Hello, I'm</p>
                     <h1 class="name">Shakib</h1>
                     <h2 class="title">Information Security Analyst</h2>
@@ -56,14 +60,14 @@
                     </p>
                     <div class="hero-btns">
                         <a href="https://drive.google.com/file/d/1IcdhwH_IEuQWat0zANuuLqPsIhLDbjct/view?usp=sharing"
-                            class="btn btn-primary" target="_blank"><i class="fas fa-file-download"></i> Resume</a>
+                            class="btn btn-primary" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-download"></i> Resume</a>
                         <a href="https://drive.google.com/file/d/13djqsPFeidVUu_5PO0wPUlRWPH0kZhIC/view?usp=sharing"
-                            class="btn btn-outline" target="_blank"><i class="fas fa-file-download"></i> Academic CV</a>
+                            class="btn btn-outline" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-download"></i> Academic CV</a>
                     </div>
                 </div>
                 <div class="hero-image">
                     <div class="image-wrapper">
-                        <img src="profile.jpg" alt="Shakib Profile">
+                        <img src="assets/images/profile.jpg" alt="Shakib Profile">
                     </div>
                 </div>
             </div>
@@ -168,14 +172,18 @@
                     <div class="skill-tags">
                         <span class="skill-tag">Network Fundamentals</span>
                         <span class="skill-tag">Ethernet</span>
+                        <span class="skill-tag">Switching</span>
                         <span class="skill-tag">IP Subnetting, Connectivity and Services</span>
-                        <span class="skill-tag">IPv4 & IPv6</span>
-                        <span class="skill-tag">Network Security Fundamentals</span>
-                        <span class="skill-tag">Switching Access Connectivity & Security</span>
-                        <span class="skill-tag">First-hop Redundancy</span>
-                        <span class="skill-tag">Routing</span>
-                        <span class="skill-tag">Switching Protocols</span>
-                        <span class="skill-tag">Wireless LAN Controllers</span>
+                        <span class="skill-tag">IPv4/IPv6 Addressing</span>
+                        <span class="skill-tag">Wide Area Networks (WAN)</span>
+                        <span class="skill-tag">Dynamic Routing</span>
+                        <span class="skill-tag">Network Address Translation (NAT)</span>
+                        <span class="skill-tag">Quality of Service (QoS)</span>
+                        <span class="skill-tag">Network Automation Basics</span>
+                        <span class="skill-tag">Security Fundamentals</span>
+                        <span class="skill-tag">Security Threat Mitigation</span>
+                        <span class="skill-tag">Virtualization</span>
+                        <span class="skill-tag">Software-Defined Networks (SDN)</span>
                     </div>
                 </div>
 
@@ -321,7 +329,7 @@
                         <div class="project-links">
 
                             <a href="https://ieeexplore.ieee.org/document/11022460" class="btn-sm github-link"
-                                target="_blank"><i class="fas fa-file-alt"></i>
+                                target="_blank" rel="noopener noreferrer"><i class="fas fa-file-alt"></i>
                                 Published Paper</a>
                         </div>
                     </div>
@@ -336,10 +344,10 @@
                             for nuanced emotional signals in music recommendations.</p>
                         <div class="project-links">
                             <a href="https://github.com/mdshakibulalam/Music-Sentiment-Analysis/blob/main/Music_Recommendation_based_on_Sentiment_Analysis_using_NLP_techniques.pdf"
-                                class="btn-sm github-link" target="_blank"><i class="fas fa-file-alt"></i>
+                                class="btn-sm github-link" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-alt"></i>
                                 Pdf</a>
                             <a href="https://github.com/J0vial/Music-Sentiment-Analysis" class="btn-sm github-link"
-                                target="_blank"><i class="fab fa-github"></i>
+                                target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i>
                                 GitHub Link</a>
                         </div>
                     </div>
@@ -372,7 +380,7 @@
                             reliable access via MySQL Workbench.</p>
                         <div class="project-links">
                             <a href="https://github.com/J0vial/Google-cloud-Migration" class="btn-sm github-link"
-                                target="_blank"><i class="fab fa-github"></i>
+                                target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i>
                                 GitHub Link</a>
                         </div>
                     </div>
@@ -387,7 +395,7 @@
                             managing players, scores, and teams.</p>
                         <div class="project-links">
                             <a href="https://github.com/J0vial/Cricket-Fantasy" class="btn-sm github-link"
-                                target="_blank"><i class="fab fa-github"></i>
+                                target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i>
                                 GitHub Link</a>
                         </div>
                     </div>
@@ -402,7 +410,7 @@
                             Decision Tree for enhanced diagnostic potential.</p>
                         <div class="project-links">
                             <a href="https://github.com/J0vial/Sleep-Disorder-Classification" class="btn-sm github-link"
-                                target="_blank"><i class="fab fa-github"></i>
+                                target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i>
                                 GitHub Link</a>
                         </div>
                     </div>
@@ -417,7 +425,7 @@
                             admin panel for managing users, packages, and payments.</p>
                         <div class="project-links">
                             <a href="https://github.com/J0vial/Adventura-Plan-Your-Trips" class="btn-sm github-link"
-                                target="_blank"><i class="fab fa-github"></i>
+                                target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i>
                                 GitHub Link</a>
                         </div>
                     </div>
@@ -433,7 +441,7 @@
                         <div class="project-links">
 
                             <a href="https://github.com/J0vial/Season-Change" class="btn-sm github-link"
-                                target="_blank"><i class="fab fa-github"></i>
+                                target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i>
                                 GitHub Link</a>
                         </div>
                     </div>
@@ -448,7 +456,7 @@
                             appointment booking, and admin tools for data management.</p>
                         <div class="project-links">
                             <a href="https://github.com/J0vial/Appointment" class="btn-sm github-link"
-                                target="_blank"><i class="fab fa-github"></i>
+                                target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i>
                                 GitHub Link</a>
                         </div>
                     </div>
@@ -463,7 +471,7 @@
                             based on player performance, and view rankings.</p>
                         <div class="project-links">
                             <a href="https://github.com/J0vial/Fantasy_wc_22" class="btn-sm github-link"
-                                target="_blank"><i class="fab fa-github"></i>
+                                target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i>
                                 GitHub Link</a>
                         </div>
                     </div>
@@ -478,7 +486,7 @@
                             information on an output device.</p>
                         <div class="project-links">
                             <a href="https://github.com/J0vial/Flood-Detection" class="btn-sm github-link"
-                                target="_blank"><i class="fab fa-github"></i>
+                                target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i>
                                 GitHub Link</a>
                         </div>
                     </div>
@@ -493,7 +501,7 @@
                             enhance transit efficiency and user experience.</p>
                         <div class="project-links">
                             <a href="https://github.com/J0vial/Bus-tracking-system" class="btn-sm github-link"
-                                target="_blank"><i class="fab fa-github"></i>
+                                target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i>
                                 GitHub Link</a>
                         </div>
                     </div>
@@ -507,59 +515,138 @@
     <section id="courses" class="section">
         <div class="container">
             <h2 class="section-title">Courses & Certifications</h2>
-            <div class="projects-grid">
-
-                <!-- Course 1 -->
-                <div class="project-card">
-                    <div class="project-info">
-                        <span class="project-tag">Courses</span>
-                        <h3>CCNA: Switching, Routing, and Wireless Essentials</h3>
-                        <div class="project-links">
-                            <a href="https://www.credly.com/badges/53b75957-5d36-4d7e-86b4-491520c47a53/public_url"
-                                class="btn-sm" target="_blank">View Certificate</a>
+            <p class="credentials-intro">A selection of industry training and certifications that support my work in networking and cybersecurity.</p>
+            <div class="credential-categories">
+                <section class="credential-category" aria-labelledby="network-credentials">
+                    <div class="credential-category-heading">
+                        <span class="credential-category-icon"><i class="fas fa-network-wired" aria-hidden="true"></i></span>
+                        <div>
+                            
+                            <h3 id="network-credentials">Network</h3>
                         </div>
                     </div>
-                </div>
+                    
+                    <div class="credential-subgroup">
+                        <div class="credential-subgroup-heading">
+                            <span>CCNA</span>
+                            <p>Cisco Certified Network Associate coursework</p>
+                        </div>
+                        <div class="credential-grid">
 
-                <!-- Course 2 -->
-                <div class="project-card">
-                    <div class="project-info">
-                        <span class="project-tag">Course</span>
-                        <h3>CCNA: Introduction to Networks</h3>
-                        <div class="project-links">
-                            <a href="https://www.credly.com/badges/940f9be8-09a5-40af-9228-6f474ea637de/public_url"
-                                class="btn-sm" target="_blank">View Certificate</a>
+                            <!-- CCNA Course 1 -->
+                            <article class="credential-card credential-card--certificate">
+                                <a class="ccna-certificate-image" href="assets/certificates/ccna/CCNAITN.pdf" target="_blank" rel="noopener noreferrer" aria-label="Open CCNA Introduction to Networks certificate">
+                                    <img src="assets/certificates/ccna/introduction-to-networks.png" alt="Cisco Networking Academy Certificate of Course Completion for CCNA Introduction to Networks">
+                                    <span>Open certificate <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+                                </a>
+                                <div class="credential-content">
+                                    <span class="credential-type">Course</span>
+                                    <h3>CCNA: Switching, Routing, and Wireless Essentials</h3>
+                                    <p class="credential-issuer"><i class="fas fa-award" aria-hidden="true"></i> Cisco Networking Academy</p>
+                                    <p>Hands-on networking training covering switching, routing, wireless LANs, and secure connectivity.</p>
+                                    <div class="credential-actions">
+                                        
+                                    </div>
+                                </div>
+                            </article>
+
+                            <!-- CCNA Course 2 -->
+                            <article class="credential-card credential-card--certificate">
+                                <a class="ccna-certificate-image" href="assets/certificates/ccna/CCNASRWE.pdf" target="_blank" rel="noopener noreferrer" aria-label="Open CCNA Switching, Routing, and Wireless Essentials certificate">
+                                    <img src="assets/certificates/ccna/switching-routing-wireless.png" alt="Cisco Networking Academy Certificate of Course Completion for CCNA Switching, Routing, and Wireless Essentials">
+                                    <span>Open certificate <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+                                </a>
+                                <div class="credential-content">
+                                    <span class="credential-type">Course</span>
+                                    <h3>CCNA: Introduction to Networks</h3>
+                                    <p class="credential-issuer"><i class="fas fa-award" aria-hidden="true"></i> Cisco Networking Academy</p>
+                                    <p>Foundational coursework in network architecture, IP services, Ethernet, and network security.</p>
+                                    <div class="credential-actions">
+                                        
+                                    </div>
+                                </div>
+                            </article>
+
+                            <!-- CCNA Course 3 -->
+                            <article class="credential-card credential-card--certificate">
+                                <a class="ccna-certificate-image" href="assets/certificates/ccna/CCNAENSA.pdf" target="_blank" rel="noopener noreferrer" aria-label="Open CCNA Enterprise Networking, Security, and Automation certificate">
+                                    <img src="assets/certificates/ccna/enterprise-networking-security-automation.png" alt="Cisco Networking Academy Certificate of Course Completion for CCNA Enterprise Networking, Security, and Automation">
+                                    <span>Open certificate <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+                                </a>
+                                <div class="credential-content">
+                                    <span class="credential-type">Course</span>
+                                    <h3>CCNA: Enterprise Networking, Security, and Automation</h3>
+                                    <p class="credential-issuer"><i class="fas fa-award" aria-hidden="true"></i> Cisco Networking Academy</p>
+                                    <p>Advanced networking coursework covering enterprise services, security controls, automation, and scalable architectures.</p>
+                                    <div class="credential-actions">
+                                        
+                                    </div>
+                                </div>
+                            </article>
                         </div>
                     </div>
-                </div>
+                </section>
 
-                <!-- Course 3 -->
-                <div class="project-card">
-                    <div class="project-info">
-                        <span class="project-tag">Course</span>
-                        <h3>Jr Penetration Tester Certificate</h3>
-
-                        <div class="project-links">
-                            <a href="https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-UA1QX0JUER.pdf"
-                                class="btn-sm" target="_blank">View Certificate</a>
+                <!-- <section class="credential-category credential-category-system" aria-labelledby="system-credentials">
+                    <div class="credential-category-heading">
+                        <span class="credential-category-icon"><i class="fas fa-server" aria-hidden="true"></i></span>
+                        <div>
+                            <p class="credential-category-label">Learning track</p>
+                            <h3 id="system-credentials">System</h3>
                         </div>
                     </div>
-                </div>
-
-                 <!-- Course 4 -->
-                <div class="project-card">
-                    <div class="project-info">
-                        <span class="project-tag">Certification</span>
-                        <h3> ISC2 Certified in CyberSecurity</h3>
-
-                        <div class="project-links">
-                            <a href="certification_cc.pdf"
-                                class="btn-sm" target="_blank">View Certificate</a>
+                    <div class="credential-empty-state">
+                        <i class="fas fa-hard-drive" aria-hidden="true"></i>
+                        <div>
+                            <h4>System credentials</h4>
+                            <p>Linux, cloud, and infrastructure certifications will appear here.</p>
                         </div>
                     </div>
-                </div>
-                cl
+                </section> -->
 
+                <section class="credential-category" aria-labelledby="security-credentials">
+                    <div class="credential-category-heading">
+                        <span class="credential-category-icon"><i class="fas fa-shield-halved" aria-hidden="true"></i></span>
+                        <div>
+                            
+                            <h3 id="security-credentials">Security</h3>
+                        </div>
+                    </div>
+                    <div class="credential-grid">
+                        <!-- Security Certificate 1 -->
+                        <article class="credential-card credential-card-featured">
+                            
+                                <a class="credential-certificate-image" href="assets/certificates/tryhackme/jr-penetration-tester.pdf" target="_blank" rel="noopener noreferrer" aria-label="jr-penetration-tester">
+                                <img src="assets/certificates/tryhackme\jr-penetration-tester.jpg" alt="Junior Pentester">
+                                <span>Open certificate <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+                            </a>
+                          
+                            
+                            <div class="credential-content">
+                                <span class="credential-type">Course</span>
+                                <h3>Jr Penetration Tester</h3>
+                                <p class="credential-issuer"><i class="fas fa-award" aria-hidden="true"></i> TryHackMe</p>
+                                <p>Practical training in reconnaissance, vulnerability analysis, exploitation, and reporting.</p>    
+                                
+                            </div>
+                        </article>
+
+                        <!-- Security Certificate 2 -->
+                        <article class="credential-card credential-card-featured">
+                            <a class="credential-certificate-image" href="assets/certificates/isc2/certified-in-cybersecurity.pdf" target="_blank" rel="noopener noreferrer" aria-label="Open ISC2 Certified in Cybersecurity certificate">
+                                <img src="assets/certificates/isc2/certified-in-cybersecurity.png" alt="ISC2 Certified in Cybersecurity certificate issued to Md. Shakibul Alam">
+                                <span>Open certificate <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+                            </a>
+                            <div class="credential-content">
+                                <span class="credential-type">Certificate</span>
+                                <h3>ISC2 Certified in Cybersecurity</h3>
+                                <p class="credential-issuer"><i class="fas fa-award" aria-hidden="true"></i> ISC2</p>
+                                <p>Industry certification validating foundational cybersecurity knowledge and professional ethics.</p>
+                                
+                            </div>
+                        </article>
+                    </div>
+                </section>
             </div>
         </div>
     </section>
@@ -573,11 +660,11 @@
                 <div class="skill-card">
                     <i class="fas fa-robot"></i>
                     <h3>Executive - Robotics Club of Brac University</h3>
-                    <p>2021– 2023</p>
+                    <p>2021–2023</p>
                     <ul style="text-align: left; margin-top: 10px; font-size: 0.9rem; color: var(--text-secondary);">
                         <li>Managed and organized SP Valorant Game Series for seasons 2 and 3</li>
-                        <li>Volunteered and co-planned the ”TRACTION Omni-verse” event in 2022.</li>
-                        <li>Planned and executed the ”Global Industrial Impact of Robotics and Automation” seminar in
+                        <li>Volunteered and co-planned the “TRACTION Omni-verse” event in 2022.</li>
+                        <li>Planned and executed the “Global Industrial Impact of Robotics and Automation” seminar in
                             2022.</li>
                     </ul>
                 </div>
@@ -601,7 +688,7 @@
             <div class="contact-text">
                 <p>I'm always open to discussing new projects, creative ideas or opportunities to be part of your
                     visions.</p>
-                <a class="btn btn-outline">mdshakibulalam56@gmail.com</a>
+                <a class="btn btn-outline" href="mailto:mdshakibulalam56@gmail.com">mdshakibulalam56@gmail.com</a>
             </div>
             <div class="social-links">
                 <a href="https://github.com/mdshakibulalam"><i class="fab fa-github"></i></a>
@@ -610,6 +697,8 @@
             </div>
         </div>
     </section>
+
+    </main>
 
     <footer>
         <div class="container">
@@ -621,6 +710,6 @@
 </body>
 
 
-</html
+</html>
 
 

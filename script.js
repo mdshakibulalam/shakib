@@ -4,10 +4,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileMenuBtn = document.getElementById('mobile-menu');
     const navList = document.querySelector('.nav-list');
 
-    if (mobileMenuBtn) {
+    const setMenuState = (isOpen) => {
+        navList.classList.toggle('active', isOpen);
+        mobileMenuBtn.classList.toggle('active', isOpen);
+        mobileMenuBtn.setAttribute('aria-expanded', String(isOpen));
+        mobileMenuBtn.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+        document.body.classList.toggle('menu-open', isOpen);
+    };
+
+    if (mobileMenuBtn && navList) {
         mobileMenuBtn.addEventListener('click', () => {
-            navList.classList.toggle('active');
-            mobileMenuBtn.classList.toggle('active'); // Optional: for animating hamburger
+            setMenuState(!navList.classList.contains('active'));
         });
     }
 
@@ -15,9 +22,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
-            navList.classList.remove('active');
-            if (mobileMenuBtn) mobileMenuBtn.classList.remove('active');
+            if (mobileMenuBtn && navList) setMenuState(false);
         });
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && mobileMenuBtn && navList && navList.classList.contains('active')) {
+            setMenuState(false);
+            mobileMenuBtn.focus();
+        }
     });
 
     // Smooth Scroll for Anchor Links (Optional, CSS often handles this well but JS adds control)
@@ -45,14 +58,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Theme Toggle Logic
     const themeToggleBtn = document.getElementById('theme-toggle');
-    const themeIcon = themeToggleBtn.querySelector('i');
+    const themeIcon = themeToggleBtn?.querySelector('i');
     const body = document.body;
 
     // Check for saved theme preference
     const currentTheme = localStorage.getItem('theme');
-    if (currentTheme === 'light') {
+    if (currentTheme === 'light' && themeIcon) {
         body.classList.add('light-theme');
         themeIcon.classList.replace('fa-moon', 'fa-sun');
+        themeToggleBtn.setAttribute('aria-label', 'Switch to dark theme');
     }
 
     if (themeToggleBtn) {
@@ -62,9 +76,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (body.classList.contains('light-theme')) {
                 themeIcon.classList.replace('fa-moon', 'fa-sun');
                 localStorage.setItem('theme', 'light');
+                themeToggleBtn.setAttribute('aria-label', 'Switch to dark theme');
             } else {
                 themeIcon.classList.replace('fa-sun', 'fa-moon');
                 localStorage.setItem('theme', 'dark');
+                themeToggleBtn.setAttribute('aria-label', 'Switch to light theme');
             }
         });
     }
