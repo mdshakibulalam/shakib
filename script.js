@@ -86,63 +86,77 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // Project Filtering
-    const filterBtns = document.querySelectorAll('.filter-btn');
+    const projectFilters = document.querySelectorAll('#projects [data-project-filter]');
     const projectCards = document.querySelectorAll('#projects .project-card');
 
-    if (filterBtns.length > 0) {
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Remove active class from all buttons
-                filterBtns.forEach(b => b.classList.remove('active'));
-                // Add active class to clicked button
-                btn.classList.add('active');
+    projectFilters.forEach(button => {
+        button.addEventListener('click', () => {
+            projectFilters.forEach(filterButton => {
+                const isActive = filterButton === button;
+                filterButton.classList.toggle('active', isActive);
+                filterButton.setAttribute('aria-pressed', String(isActive));
+            });
 
-                const filterValue = btn.getAttribute('data-filter');
+            const filterValue = button.dataset.projectFilter;
+            projectCards.forEach(card => card.classList.add('animating'));
 
-                // 1. Fade out ALL cards first using the 'animating' class defined in CSS
+            setTimeout(() => {
                 projectCards.forEach(card => {
-                    card.classList.add('animating');
+                    const tag = card.querySelector('.project-tag').textContent.toLowerCase();
+                    card.classList.toggle('hide', filterValue !== 'all' && !tag.includes(filterValue));
                 });
 
-                // 2. Wait for fade out to finish (300ms matches CSS transition)
-                setTimeout(() => {
-                    projectCards.forEach(card => {
-                        const tag = card.querySelector('.project-tag').textContent.toLowerCase();
-                        let shouldShow = false;
+                projectCards.forEach((card, index) => {
+                    if (!card.classList.contains('hide')) {
+                        setTimeout(() => card.classList.remove('animating'), 50 + index * 50);
+                    }
+                });
+            }, 300);
+        });
+    });
 
-                        if (filterValue === 'all') {
-                            shouldShow = true;
-                        } else if (filterValue === 'hardware') {
-                            if (tag.includes('hardware')) {
-                                shouldShow = true;
-                            }
-                        } else {
-                            if (tag.includes(filterValue)) {
-                                shouldShow = true;
-                            }
-                        }
+    const initializeVendorFilter = (sectionId, filterAttribute) => {
+        const section = document.getElementById(sectionId);
+        if (!section) return;
 
-                        if (shouldShow) {
-                            card.classList.remove('hide');
-                        } else {
-                            card.classList.add('hide');
-                        }
+        const buttons = section.querySelectorAll(`[${filterAttribute}]`);
+        const cards = section.querySelectorAll('.credential-card[data-vendor]');
+        let filterTimeout;
+        const revealTimeouts = [];
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                clearTimeout(filterTimeout);
+                revealTimeouts.forEach(clearTimeout);
+                revealTimeouts.length = 0;
+
+                buttons.forEach(filterButton => {
+                    const isActive = filterButton === button;
+                    filterButton.classList.toggle('active', isActive);
+                    filterButton.setAttribute('aria-pressed', String(isActive));
+                });
+
+                const vendor = button.getAttribute(filterAttribute);
+                cards.forEach(card => card.classList.add('animating'));
+
+                filterTimeout = setTimeout(() => {
+                    cards.forEach(card => {
+                        card.classList.toggle('hide', vendor !== 'all' && card.dataset.vendor !== vendor);
                     });
 
-                    // 3. Fade in visible cards with a stagger effect
-                    const visibleCards = Array.from(projectCards).filter(c => !c.classList.contains('hide'));
-
-                    visibleCards.forEach((card, index) => {
-                        // Stagger delay: 50ms initial + 50ms per item
-                        setTimeout(() => {
-                            card.classList.remove('animating');
-                        }, 50 + (index * 50));
+                    cards.forEach((card, index) => {
+                        if (!card.classList.contains('hide')) {
+                            revealTimeouts.push(setTimeout(() => {
+                                card.classList.remove('animating');
+                            }, 50 + index * 50));
+                        }
                     });
-
                 }, 300);
             });
         });
-    }
+    };
+
+    initializeVendorFilter('courses', 'data-course-filter');
+    initializeVendorFilter('certifications', 'data-certification-filter');
 
 });
