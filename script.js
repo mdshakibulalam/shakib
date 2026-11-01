@@ -88,6 +88,76 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const projectFilters = document.querySelectorAll('#projects [data-project-filter]');
     const projectCards = document.querySelectorAll('#projects .project-card');
+    const projectTimeline = document.querySelector('#projects .project-timeline');
+    const projectLoadMore = document.getElementById('project-load-more');
+    const projectGroups = new Map();
+    let projectsExpanded = false;
+
+    [...projectCards]
+        .sort((first, second) => Number(first.dataset.projectOrder) - Number(second.dataset.projectOrder))
+        .forEach(card => {
+            const year = card.dataset.projectYear;
+            let group = projectGroups.get(year);
+
+            if (!group) {
+                group = document.createElement('div');
+                group.className = 'project-year-group';
+
+                const heading = document.createElement('h3');
+                heading.className = 'project-year-heading';
+                heading.textContent = year;
+
+                const grid = document.createElement('div');
+                grid.className = 'projects-grid';
+
+                group.append(heading, grid);
+                projectTimeline.append(group);
+                projectGroups.set(year, group);
+            }
+
+            group.querySelector('.projects-grid').append(card);
+        });
+
+    const updateProjectPagination = () => {
+        let rowCount = 0;
+        projectCards.forEach(card => card.classList.remove('load-more-hidden'));
+
+        projectGroups.forEach(group => {
+            const matchingCards = [...group.querySelectorAll('.project-card:not(.hide)')];
+            group.classList.toggle('hide', matchingCards.length === 0);
+
+            let previousTop = null;
+            matchingCards.forEach(card => {
+                if (card.offsetTop !== previousTop) {
+                    rowCount += 1;
+                    previousTop = card.offsetTop;
+                }
+
+                card.classList.toggle('load-more-hidden', !projectsExpanded && rowCount > 3);
+            });
+        });
+
+        projectGroups.forEach(group => {
+            group.classList.toggle('hide', !group.querySelector('.project-card:not(.hide):not(.load-more-hidden)'));
+        });
+
+        if (rowCount <= 3) {
+            projectsExpanded = false;
+            projectCards.forEach(card => card.classList.remove('load-more-hidden'));
+        }
+
+        projectLoadMore.hidden = rowCount <= 3;
+        projectLoadMore.textContent = projectsExpanded ? 'Show less' : 'Load more projects';
+        projectLoadMore.setAttribute('aria-expanded', String(projectsExpanded));
+    };
+
+    projectLoadMore.addEventListener('click', () => {
+        projectsExpanded = !projectsExpanded;
+        updateProjectPagination();
+    });
+
+    window.addEventListener('resize', updateProjectPagination);
+    updateProjectPagination();
 
     projectFilters.forEach(button => {
         button.addEventListener('click', () => {
@@ -106,6 +176,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     card.classList.toggle('hide', filterValue !== 'all' && !tag.includes(filterValue));
                 });
 
+                projectGroups.forEach(group => {
+                    group.classList.toggle('hide', !group.querySelector('.project-card:not(.hide)'));
+                });
+
+                projectsExpanded = false;
+                updateProjectPagination();
+
                 projectCards.forEach((card, index) => {
                     if (!card.classList.contains('hide')) {
                         setTimeout(() => card.classList.remove('animating'), 50 + index * 50);
@@ -115,7 +192,66 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    const initializeVendorFilter = (sectionId, filterAttribute) => {
+    const initializeLoadMore = (sectionId, cardSelector, buttonId, buttonLabel) => {
+        const section = document.getElementById(sectionId);
+        const button = document.getElementById(buttonId);
+        const cards = section.querySelectorAll(cardSelector);
+        let expanded = false;
+
+        const update = () => {
+            let rowCount = 0;
+            let previousTop = null;
+            cards.forEach(card => card.classList.remove('load-more-hidden'));
+
+            const visibleCards = [...cards].filter(card => !card.classList.contains('hide'));
+            const cardRows = visibleCards.map(card => {
+                const top = Math.round(card.getBoundingClientRect().top);
+                if (top !== previousTop) {
+                    rowCount += 1;
+                    previousTop = top;
+                }
+                return rowCount;
+            });
+
+            if (rowCount <= 3) {
+                expanded = false;
+                cards.forEach(card => card.classList.remove('load-more-hidden'));
+            } else if (!expanded) {
+                visibleCards.forEach((card, index) => {
+                    card.classList.toggle('load-more-hidden', cardRows[index] > 3);
+                });
+            }
+
+            button.hidden = rowCount <= 3;
+            button.textContent = expanded ? 'Show less' : buttonLabel;
+            button.setAttribute('aria-expanded', String(expanded));
+        };
+
+        button.addEventListener('click', () => {
+            expanded = !expanded;
+            update();
+        });
+        window.addEventListener('resize', update);
+        update();
+
+        return update;
+    };
+
+    const updateCoursesPagination = initializeLoadMore(
+        'courses',
+        '.credential-card',
+        'courses-load-more',
+        'Load more courses'
+    );
+    const updateCertificationsPagination = initializeLoadMore(
+        'certifications',
+        '.credential-card',
+        'certifications-load-more',
+        'Load more certifications'
+    );
+    initializeLoadMore('research', '.project-card', 'research-load-more', 'Load more publications');
+
+    const initializeVendorFilter = (sectionId, filterAttribute, updatePagination) => {
         const section = document.getElementById(sectionId);
         if (!section) return;
 
@@ -144,6 +280,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         card.classList.toggle('hide', vendor !== 'all' && card.dataset.vendor !== vendor);
                     });
 
+                    updatePagination();
+
                     cards.forEach((card, index) => {
                         if (!card.classList.contains('hide')) {
                             revealTimeouts.push(setTimeout(() => {
@@ -156,7 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    initializeVendorFilter('courses', 'data-course-filter');
-    initializeVendorFilter('certifications', 'data-certification-filter');
+    initializeVendorFilter('courses', 'data-course-filter', updateCoursesPagination);
+    initializeVendorFilter('certifications', 'data-certification-filter', updateCertificationsPagination);
 
 });
