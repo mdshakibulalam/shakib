@@ -711,6 +711,43 @@ header {
     color: var(--text-secondary);
 }
 
+.academic-awards {
+    margin-top: 1rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.academic-awards h5 {
+    margin-bottom: 0.7rem;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+}
+
+.academic-awards h5 i {
+    margin-right: 0.35rem;
+    color: var(--accent-color);
+}
+
+.academic-awards ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding-left: 0.75rem;
+}
+
+.academic-awards li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+.academic-awards .award-count {
+    color: var(--accent-color);
+    font-weight: 700;
+}
+
 /* Responsive adjustment for small screens */
 @media (max-width: 600px) {
     .education-card {
@@ -1663,6 +1700,15 @@ body.light-theme .section:nth-of-type(even) { background: rgba(224, 236, 247, 0.
 .project-card:hover { transform: translateY(-5px); background: var(--surface-raised); }
 .project-tag, .credential-type { color: var(--accent-color); font-family: var(--font-mono); font-size: 0.67rem; letter-spacing: 0.1em; }
 .project-info h3 { font-size: 1.3rem; }
+
+#research .projects-grid { display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 1rem; }
+#research .project-card { flex: 0 1 282px; width: 100%; max-width: 282px; min-height: 0; min-width: 0; padding: 0; background: var(--card-bg); }
+#research .project-info { display: flex; flex: 1; flex-direction: column; align-items: flex-start; padding: 1.1rem 1.2rem; }
+#research .project-tag { margin-bottom: 0.55rem; }
+#research .project-info h3 { margin-bottom: 0.55rem; font-size: 1.1rem; }
+#research .project-info p { margin-bottom: 0.9rem; font-size: 0.82rem; line-height: 1.5; }
+#research .project-links { width: 100%; margin-top: auto; padding-top: 0.7rem; border-top: 1px solid var(--border-color); }
+#research .btn-sm { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.04em; text-transform: uppercase; }
 
 #projects .container { max-width: 1240px; }
 #projects .project-timeline { position: relative; display: grid; gap: 2rem; }
